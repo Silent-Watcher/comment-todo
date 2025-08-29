@@ -13,7 +13,7 @@ async function main() {
 
 	const options = program.opts();
 
-	const rootDirToScan: string = options.root.toLowerCase();
+	const rootDirToScan: string = resolve(options.root.toLowerCase());
 	const outputFile: string = options.out.toLowerCase();
 	const extensions: string[] = options.ext;
 	const ignoreGlobs: string[] = options.ignore;
@@ -45,8 +45,10 @@ async function main() {
 			if (outputFile === '-' || dryRun) {
 				console.log(output);
 			} else {
-				const outPath = resolve(rootDirToScan, outputFile);
-				await writeFile(outPath, output, 'utf8');
+				const outPath = resolve(process.cwd(), outputFile);
+				console.log('rootDirToScan: ', rootDirToScan);
+				console.log('outPath: ', outPath);
+				await writeFile(outPath, output, {});
 				console.log(chalk.green(`Wrote ${outPath}`));
 			}
 		} catch (error) {

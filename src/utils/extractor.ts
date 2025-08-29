@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import os from 'node:os';
-import { extname } from 'node:path';
+import { extname, join, resolve } from 'node:path';
 import { parse as babelParse } from '@babel/parser';
 import fg from 'fast-glob';
 import pLimit from 'p-limit';
@@ -16,17 +16,19 @@ import type { ExtractOptions, FoundComment, Tag } from '../common/types';
 import { normalizeTag, parseCommentMeta, relativePath } from './helpers';
 
 export async function findComments(opts: ExtractOptions) {
-	const root = opts.root || process.cwd();
+	const root = resolve(opts.root || process.cwd());
 	const exts =
 		opts.exts && opts.exts.length ? opts.exts : DEFAULT_SUPPORTED_EXTS;
 	const ignore = opts.ignore || DEFAULT_IGNORE_GLOBS;
 	const concurrency = opts.concurrency ?? Math.max(4, os.cpus().length);
 
-	const patterns = exts.map((e) => `**/*.${e}`);
+	const patterns = [`**/*.{${exts.join(',')}}`];
 	const foundedFiles = await fg(patterns, {
 		cwd: root,
-		ignore,
+		ignore: ignore || [],
 		absolute: true,
+		dot: true,
+		followSymbolicLinks: false,
 	});
 
 	const limitConcurrentExecution = pLimit(concurrency);
@@ -44,6 +46,7 @@ export async function findComments(opts: ExtractOptions) {
 				try {
 					const content = await readFile(file, 'utf-8');
 					if (JS_TS_EXTS.has(ext)) {
+						console.log('inside js parser');
 						// Use @babel/parser to get comments reliably (avoids strings)
 						try {
 							const ast = babelParse(content, {
@@ -64,6 +67,9 @@ export async function findComments(opts: ExtractOptions) {
 								start?: number;
 								end?: number;
 							}>;
+
+							console.log('comments: ', comments);
+
 							if (comments && comments.length) {
 								for (const comment of comments) {
 									// comment value is the inside, might span multiple lines

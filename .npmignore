@@ -6,6 +6,8 @@ docs
 tsconfig.json
 tsup.config.ts
 
+examples
+
 vitest.config.ts
 tests
 coverage
