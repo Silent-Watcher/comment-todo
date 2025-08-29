@@ -1,6 +1,6 @@
 {
 	"name": "comment-todo",
-	"version": "0.9.0",
+	"version": "0.9.1",
 	"type": "module",
 	"bin": {
 		"comment-todo": "dist/bin.js"
