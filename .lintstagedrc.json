@@ -1,0 +1,5 @@
+{
+	"*.ts": [
+		"biome check --write ./src/*.ts ./tests/*.ts"
+	]
+}

@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory : "/"
+    schedule:
+      interval: "monthly"
+    reviewers:
+      - "Silent-Watcher"
+    commit-message:
+      prefix: 'chore'
+      scope: "deps"
+      include: "scope"
+    target-branch: "dependency-updates"
+    allow:
+      - dependency-type: "direct"
+    open-pull-requests-limit: 5

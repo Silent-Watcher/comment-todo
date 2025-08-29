@@ -1,0 +1,46 @@
+name: coverage
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Unit Tests
+        run: npm run test
+
+      - name: Create badges directory
+        run: mkdir -p badges
+
+      - name: Publish Results Badge
+        uses: wjervis7/vitest-badge-action@v1.0.0
+        if: success() || failure() # run whether steps succeed or not
+        with:
+          result-type: lines
+          upload-badge: false
+          badge-path: badges/vitest.svg
+          badge-neutral-color: 696969
+      - name: Commit Badge to Repository
+        if: success() || failure()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add badges/vitest.svg
+          git commit -m "chore: update vitest badge" || echo "No changes to commit"
+          git push
