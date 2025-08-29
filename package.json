@@ -22,11 +22,11 @@
 	"description": "CLI to extract TODO/FIXME/HACK comments and generate TODO.md",
 	"scripts": {
 		"tsc": "tsc",
-		"dev": "tsx --watch src/cli.ts",
+		"dev": "tsx --watch src/bin.ts",
 		"prebuild": "npm run tsc && npm run clean",
 		"build": "tsup",
 		"prestart": "npm run build",
-		"start": "node dist/cli.js",
+		"start": "node dist/bin.js",
 		"test": "vitest run --coverage",
 		"test:watch": "vitest dev",
 		"prelint": "biome format --write ./src/*.ts ./tests/*.ts",

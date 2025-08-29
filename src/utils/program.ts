@@ -1,5 +1,9 @@
 import { Command } from 'commander';
-import { version } from '../package.json';
+import { version } from '../../package.json';
+import {
+	DEFAULT_IGNORE_GLOBS,
+	DEFAULT_SUPPORTED_EXTS,
+} from '../common/constants';
 
 export function initialProgram(): Command {
 	const program = new Command();
@@ -21,13 +25,13 @@ export function initialProgram(): Command {
 			'-e, --ext <list>',
 			'comma-separated extensions to include',
 			(v: string) => v.split(',').map((s) => s.trim()),
-			['js', 'ts', 'jsx', 'tsx', 'py', 'sh', 'php', 'go'],
+			DEFAULT_SUPPORTED_EXTS,
 		)
 		.option(
 			'-i, --ignore <list>',
 			'comma-separated ignore globs',
 			(v: string) => v.split(',').map((s) => s.trim()),
-			['node_modules/**', '.git/**', 'dist/**'],
+			DEFAULT_IGNORE_GLOBS,
 		)
 		.option(
 			'-f, --format <format>',
