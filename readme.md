@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/spotenv.png" alt="spotenv" width="200" height="200">
+  <img src="assets/comment-todo.svg" alt="comment-todo" width="200" height="200">
 
   <h1>comment-todo</h1>
 
@@ -17,16 +17,35 @@
   </p>
 
   <p>⭐️ Please press the star! It greatly helps development! ⭐️</p>
+  <p>CLI that scans source files for comment tags (`TODO`, `FIXME`, `HACK`) and generates a `TODO.md`.</p>
+
 
 </div>
 
 
-CLI that scans source files for comment tags (`TODO`, `FIXME`, `HACK`) and generates a `TODO.md`.
 
 ## Install
 
 ```bash
 npm i -g comment-todo
+```
+
+## CLI design
+
+```sh
+Usage: comment-todo [options]
+
+
+Options:
+-r, --root <path> Project root (default: .)
+-o, --out <path> Output file (default: TODO.md)
+-e, --ext <exts> Comma-separated file extensions to include (default: js,ts,jsx,tsx,py,sh)
+-p, --pattern <glob> Additional include glob (can be used multiple times)
+-x, --exclude <glob> Exclude glob (default: node_modules/**,.git/**)
+-f, --format <format> Output format: markdown|json (default: markdown)
+--dry-run Print results to stdout instead of writing file
+--verbose Verbose logging
+-h, --help display help for command
 ```
 
 ## Usage
