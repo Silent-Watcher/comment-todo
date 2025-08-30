@@ -46,8 +46,6 @@ async function main() {
 				console.log(output);
 			} else {
 				const outPath = resolve(process.cwd(), outputFile);
-				console.log('rootDirToScan: ', rootDirToScan);
-				console.log('outPath: ', outPath);
 				await writeFile(outPath, output, {});
 				console.log(chalk.green(`Wrote ${outPath}`));
 			}

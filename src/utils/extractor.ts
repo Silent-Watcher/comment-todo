@@ -46,7 +46,6 @@ export async function findComments(opts: ExtractOptions) {
 				try {
 					const content = await readFile(file, 'utf-8');
 					if (JS_TS_EXTS.has(ext)) {
-						console.log('inside js parser');
 						// Use @babel/parser to get comments reliably (avoids strings)
 						try {
 							const ast = babelParse(content, {
@@ -67,8 +66,6 @@ export async function findComments(opts: ExtractOptions) {
 								start?: number;
 								end?: number;
 							}>;
-
-							console.log('comments: ', comments);
 
 							if (comments && comments.length) {
 								for (const comment of comments) {
