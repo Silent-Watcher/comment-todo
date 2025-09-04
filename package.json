@@ -19,10 +19,14 @@
 		"name": "Ali nazari"
 	},
 	"license": "MIT",
+	"engines": {
+		"node": ">=20.18.0"
+	},
+	"engineStrict": true,
 	"description": "CLI to extract TODO/FIXME/HACK comments and generate TODO.md",
 	"scripts": {
 		"tsc": "tsc",
-		"dev": "tsx --watch src/bin.ts",
+		"dev": "node --watch src/bin.ts",
 		"prebuild": "npm run tsc && npm run clean",
 		"build": "tsup",
 		"prestart": "npm run build",
@@ -50,7 +54,6 @@
 		"husky": "^9.1.7",
 		"lint-staged": "^16.1.5",
 		"tsup": "^8.5.0",
-		"tsx": "^4.20.3",
 		"typescript": "^5.9.2",
 		"vitest": "^3.2.4"
 	},
